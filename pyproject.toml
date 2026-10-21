@@ -5,5 +5,6 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "lerobot[feetech]>=0.6.1",
+    "lerobot[feetech,hardware]>=0.6.1",
+    "tabulate>=0.10.0",
 ]
