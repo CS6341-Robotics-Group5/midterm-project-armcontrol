@@ -38,17 +38,18 @@ def main():
     robot = SO101Follower(robot_config)
     robot.connect()
 
-    fmt_dict = lambda pos_dict: "\n" + tabulate(
+    fmt_position = lambda pos_dict: "\n" + tabulate(
         [pos_dict], headers="keys", tablefmt="rounded_outline"
     )
 
     for i, target_pos in enumerate(positions):
         print(
-            "\n" + "#" * 100 + f"\nSending position {i}: {fmt_dict(target_pos)}"
+            "\n" + "#" * 100 + f"\nSending position {i}: {fmt_position(target_pos)}"
         )
         start_time = time.time()
         robot.send_action(target_pos)
 
+        # Wait for the arm to get there
         while not positions_within_tolerance(
             robot.get_observation(), target_pos
         ):
@@ -57,13 +58,15 @@ def main():
         end_time = time.time()
 
         print(
-            f"Actual position after sending position {i}: {fmt_dict(target_pos)}"
+            f"Actual position after sending position {i}: {fmt_position(target_pos)}"
         )
         print(
             f"\nTime taken to get to position {i}: {end_time - start_time:.2f} seconds"
         )
 
         input("Press Enter to continue to the next position...")
+
+    print("\n" + "#" * 100 + "\nAll positions sent and reached successfully!")
 
 
 def positions_within_tolerance(pos1, pos2, tolerance=1):
