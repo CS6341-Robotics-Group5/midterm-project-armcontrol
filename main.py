@@ -38,8 +38,6 @@ def main():
     robot = SO101Follower(robot_config)
     robot.connect()
 
-    fmt_position = lambda pos_dict: "\n" + tabulate([pos_dict], headers="keys", tablefmt="rounded_outline")
-
     for i, target_pos in enumerate(positions):
         print("\n" + "#" * 100 + f"\nSending position {i}: {fmt_position(target_pos)}")
         start_time = time.time()
@@ -60,10 +58,24 @@ def main():
 
 
 def positions_within_tolerance(pos1, pos2, tolerance=1):
+    """
+    Check if two position dictionaries are equal (within a certain tolerance of each other).
+
+    @param pos1: First position dictionary
+    @param pos2: Second position dictionary
+    @param tolerance: Defaults to 1 degree, as per the assignment.
+    """
     for key in pos1:
         if abs(pos1[key] - pos2[key]) > tolerance:
             return False
     return True
+
+
+def fmt_position(pos_dict):
+    """
+    Print out a position dictionary in a nice table format.
+    """
+    return "\n" + tabulate([pos_dict], headers="keys", tablefmt="rounded_outline")
 
 
 if __name__ == "__main__":
