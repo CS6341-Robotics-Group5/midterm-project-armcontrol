@@ -1,40 +1,38 @@
 import time
-
 from lerobot.robots.so_follower import SO101Follower, SO101FollowerConfig
 from tabulate import tabulate
 
 # As per the assignment, the preset positions are:
 positions = [
     {
-        "shoulder_pan": 0.0,
-        "shoulder_lift": -30.0,
-        "elbow_flex": 30.0,
-        "wrist_flex": 70.0,
-        "wrist_roll": 0.0,
-        "gripper": 0.0,
+        "shoulder_pan.pos": 0.0,
+        "shoulder_lift.pos": -30.0,
+        "elbow_flex.pos": 30.0,
+        "wrist_flex.pos": 70.0,
+        "wrist_roll.pos": 0.0,
+        "gripper.pos": 0.0,
     },
     {
-        "shoulder_pan": 45.0,
-        "shoulder_lift": -20.0,
-        "elbow_flex": 30.0,
-        "wrist_flex": 60.0,
-        "wrist_roll": -30.0,
-        "gripper": 50.0,
+        "shoulder_pan.pos": 45.0,
+        "shoulder_lift.pos": -20.0,
+        "elbow_flex.pos": 30.0,
+        "wrist_flex.pos": 60.0,
+        "wrist_roll.pos": -30.0,
+        "gripper.pos": 50.0,
     },
     {
-        "shoulder_pan": -45.0,
-        "shoulder_lift": -10.0,
-        "elbow_flex": 0.0,
-        "wrist_flex": -30.0,
-        "wrist_roll": 30.0,
-        "gripper": 30.0,
+        "shoulder_pan.pos": -45.0,
+        "shoulder_lift.pos": -10.0,
+        "elbow_flex.pos": 0.0,
+        "wrist_flex.pos": -30.0,
+        "wrist_roll.pos": 30.0,
+        "gripper.pos": 30.0,
     },
 ]
 
 
 def main():
-    # TODO: id?
-    robot_config = SO101FollowerConfig(port="/dev/ttyUSB0", id="group5")
+    robot_config = SO101FollowerConfig(port="/dev/ttyACM0", id="group5")
     robot = SO101Follower(robot_config)
     robot.connect()
 
@@ -44,7 +42,7 @@ def main():
         robot.send_action(target_pos)
 
         # Wait for the arm to get there
-        while not positions_within_tolerance(robot.get_observation(), target_pos):
+        while not positions_within_tolerance(robot.get_observation(), target_pos, tolerance=2):
             time.sleep(0.05)
 
         end_time = time.time()
