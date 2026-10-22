@@ -49,7 +49,7 @@ def main():
 
         end_time = time.time()
 
-        print(f"Actual position after sending position {i}: {fmt_position(target_pos)}")
+        print(f"Actual position after sending position {i}: {fmt_position(robot.get_observation())}")
         print(f"\nTime taken to get to position {i}: {end_time - start_time:.2f} seconds")
 
         input("Press Enter to continue to the next position...")
