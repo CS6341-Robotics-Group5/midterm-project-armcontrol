@@ -1,4 +1,5 @@
 import time
+
 from lerobot.robots.so_follower import SO101Follower, SO101FollowerConfig
 from tabulate import tabulate
 
